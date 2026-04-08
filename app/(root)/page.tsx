@@ -5,7 +5,7 @@ import BookCard from "@/components/BookCard";
 
 const Page = () => {
     return (
-        <main className="wrapper container">
+        <main className="wrapper app-container">
             <Hero />
             <div className="library-books-grid">
                 {sampleBooks.map((book) =>(
