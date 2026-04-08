@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Serif, JetBrains_Mono, Mona_Sans} from "next/font/google";
+import { IBM_Plex_Serif, JetBrains_Mono, Geist } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
@@ -15,12 +15,7 @@ const ibmPlexSerif = IBM_Plex_Serif({
   display: 'swap'
 })
 
-const monaSans =  Mona_Sans({
-  variable: '--font-mona-sans',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap'
-})
+const monaSans = Geist({ subsets: ["latin"], variable: "--font-mona-sans" });
 
 export const metadata: Metadata = {
   title: "Bookified",

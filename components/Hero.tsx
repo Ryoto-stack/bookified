@@ -5,6 +5,12 @@ import { PlusIcon } from '@phosphor-icons/react/dist/ssr'
 
 
 
+const steps = [
+    { number: 1, title: 'Upload PDF', description: 'Add your book file' },
+    { number: 2, title: 'AI Processing', description: 'We analyze the content' },
+    { number: 3, title: 'Voice Chat', description: 'Discuss with AI' },
+]
+
 const Hero = () => {
     return (
         <section className="wrapper pt-32 pb-10">
@@ -38,35 +44,17 @@ const Hero = () => {
 
                 {/* Right Section - Steps Card */}
                 <div className="bg-white rounded-2xl p-6 shadow-soft w-full md:w-70 space-y-6 z-10">
-                    <div className="flex items-center gap-4">
-                        <div className="size-10 rounded-full border border-[#212a3b] flex items-center justify-center text-lg font-medium shrink-0">
-                            1
+                    {steps.map((step) => (
+                        <div key={step.number} className="flex items-center gap-4">
+                            <div className="size-10 rounded-full border border-[#212a3b] flex items-center justify-center text-lg font-medium shrink-0">
+                                {step.number}
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-[#212a3b]">{step.title}</h3>
+                                <p className="text-sm text-[#777]">{step.description}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="font-bold text-[#212a3b]">Upload PDF</h3>
-                            <p className="text-sm text-[#777]">Add your book file</p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <div className="size-10 rounded-full border border-[#212a3b] flex items-center justify-center text-lg font-medium shrink-0">
-                            2
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-[#212a3b]">AI Processing</h3>
-                            <p className="text-sm text-[#777]">We analyze the content</p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <div className="size-10 rounded-full border border-[#212a3b] flex items-center justify-center text-lg font-medium shrink-0">
-                            3
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-[#212a3b]">Voice Chat</h3>
-                            <p className="text-sm text-[#777]">Discuss with AI</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
          

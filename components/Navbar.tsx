@@ -25,7 +25,7 @@ const Navbar = () => {
 
 
     return (
-        <header className="w-full fixed z-50 bg-('--bg-primary')">
+        <header className="w-full fixed z-50 bg-secondary">
             <div className="wrapper navbar-height py-4 flex items-center justify-between">
                 <Link href="/" className="flex gap-0.5 items-center">
                     <Image src="/assets/logo.png" alt="Bookified" width={42} height={26} />

@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { UploadSchema } from '@/lib/zod'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,19 +23,13 @@ import {
   DEFAULT_VOICE,
   MAX_FILE_SIZE,
   ACCEPTED_PDF_TYPES,
+  MAX_IMAGE_SIZE,
+  ACCEPTED_IMAGE_TYPES,
 } from '@/lib/constants'
 import LoadingOverlay from '@/components/LoadingOverlay'
 import { cn } from '@/lib/utils'
 
-const formSchema = z.object({
-  pdfFile: z.instanceof(File, { message: 'PDF file is required' }),
-  coverImage: z.instanceof(File).optional(),
-  title: z.string().min(1, 'Title is required'),
-  author: z.string().min(1, 'Author name is required'),
-  voice: z.string(),
-})
-
-type FormValues = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof UploadSchema>
 
 const UploadForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -42,7 +37,7 @@ const UploadForm = () => {
   const [coverName, setCoverName] = useState<string | null>(null)
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(UploadSchema),
     defaultValues: {
       title: '',
       author: '',
@@ -77,8 +72,17 @@ const UploadForm = () => {
         form.setValue('pdfFile', file)
         form.clearErrors('pdfFile')
       } else {
+        if (file.size > MAX_IMAGE_SIZE) {
+          form.setError('coverImage', { message: 'Image is too large (max 10MB)' })
+          return
+        }
+        if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+          form.setError('coverImage', { message: 'Unsupported image type' })
+          return
+        }
         setCoverName(file.name)
         form.setValue('coverImage', file)
+        form.clearErrors('coverImage')
       }
     }
   }
@@ -86,7 +90,7 @@ const UploadForm = () => {
   const removeFile = (field: 'pdfFile' | 'coverImage') => {
     if (field === 'pdfFile') {
       setPdfName(null)
-      form.setValue('pdfFile', undefined as any)
+      form.setValue('pdfFile', undefined)
     } else {
       setCoverName(null)
       form.setValue('coverImage', undefined)
